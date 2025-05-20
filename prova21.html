@@ -1,0 +1,155 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova Online Segura</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .alert {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prova Online</h1>
+        <p><strong>Instruções:</strong> Responda às questões abaixo. Copiar e colar estão desativados para garantir a integridade da avaliação.</p>
+        <div id="cheating-alert" class="alert">
+            Atenção: Tentativa de copiar ou colar detectada!
+        </div>
+        
+        <form id="exam-form">
+            <div class="question">
+                <p><strong>Questão 1:</strong> Explique o conceito de fotossíntese e sua importância para os ecossistemas.</p>
+                <textarea id="answer1" rows="5" placeholder="Digite sua resposta aqui..."></textarea>
+            </div>
+            
+            <div class="question">
+                <p><strong>Questão 2:</strong> Discuta as principais causas da Segunda Guerra Mundial.</p>
+                <textarea id="answer2" rows="5" placeholder="Digite sua resposta aqui..."></textarea>
+            </div>
+            
+            <div class="question">
+                <p><strong>Questão 3:</strong> Resolva a equação: 2x² + 5x - 3 = 0</p>
+                <textarea id="answer3" rows="5" placeholder="Digite sua resposta aqui..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Enviar Prova</button>
+        </form>
+    </div>
+
+    <script>
+        // Selecionar todos os campos de texto
+        const textareas = document.querySelectorAll('textarea');
+        const alertBox = document.getElementById('cheating-alert');
+        
+        // Função para mostrar alerta
+        function showAlert() {
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Aplicar proteções a todos os campos de texto
+        textareas.forEach(textarea => {
+            // Desabilitar colar (paste)
+            textarea.addEventListener('paste', function(e) {
+                e.preventDefault();
+                showAlert();
+                // Opcional: registrar tentativa
+                console.log('Tentativa de colar detectada');
+            });
+            
+            // Desabilitar copiar (copy)
+            textarea.addEventListener('copy', function(e) {
+                e.preventDefault();
+                showAlert();
+                // Opcional: registrar tentativa
+                console.log('Tentativa de copiar detectada');
+            });
+            
+            // Desabilitar cortar (cut)
+            textarea.addEventListener('cut', function(e) {
+                e.preventDefault();
+                showAlert();
+                // Opcional: registrar tentativa
+                console.log('Tentativa de cortar detectada');
+            });
+        });
+        
+        // Desabilitar clique direito do mouse
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // Desabilitar atalhos de teclado comuns
+        document.addEventListener('keydown', function(e) {
+            // Verificar atalhos Ctrl+C, Ctrl+V, Ctrl+X
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'x')) {
+                e.preventDefault();
+                showAlert();
+                // Opcional: registrar tentativa
+                console.log('Atalho de teclado bloqueado: Ctrl/Cmd + ' + e.key);
+            }
+        });
+        
+        // Submissão do formulário
+        document.getElementById('exam-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Prova enviada com sucesso!');
+            // Aqui você adicionaria o código para enviar as respostas ao servidor
+        });
+    </script>
+</body>
+</html>
